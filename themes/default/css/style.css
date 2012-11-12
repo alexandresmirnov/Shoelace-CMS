@@ -1,0 +1,11 @@
+/* CSS crunched with Crunch - http://crunchapp.net/ */
+
+#main{padding-top:10px;}
+#search-row,#search{min-height:0px;}#search-row .search-query,#search .search-query{color:#000;}
+#search-row #search{margin-top:0px;}
+#search-row .search-query{margin-top:5px;}
+.container{max-width:600px;}
+.catul{height:20px;margin-left:0px;margin-bottom:0px;}.catul li{list-style-type:none;float:left;}
+@media (max-width:979px){}
+article h2 a{color:inherit;}article h2 a:hover{text-decoration:none;}
+article h2 a:active{color:#004466;}

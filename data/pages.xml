@@ -1,0 +1,4 @@
+<?xml version="1.0" standalone="yes"?>
+<pages count="9">
+
+<page id="9"><title>About Me</title><slug>about</slug><date><day>20</day><month>10</month><year>2012</year></date><content>This is a page about me.</content><pageTemplate>page.php</pageTemplate></page><page id="10"><title>Contact</title><slug>contact</slug><date><day>20</day><month>10</month><year>2012</year></date><content>This is a page with a contact form.</content><pageTemplate>page.php</pageTemplate></page></pages>

@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="yes"?>
+<settings>
+
+<postsPerPage>3</postsPerPage>
+<siteName>Shoelace CMS</siteName>
+<theme>default</theme>
+<installDir>/my cms</installDir>
+
+<user>admin</user>
+<pass>password</pass>
+
+</settings>
