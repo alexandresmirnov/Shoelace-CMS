@@ -2,6 +2,13 @@ RewriteEngine on
 #RewriteRule ^posts/(\w+)/?$ /my\ cms/posts.php?
 RewriteRule ^posts/page/(\w+)/?$ posts.php?page=$1
 
+RewriteRule ^page/(.+)/?$ page.php?page=$1
+
+RewriteRule ^post/(.+)/?$ single.php?post=$1
+
+RewriteRule ^search/(.+)/?$ search.php?query=$1
+
+
 #RewriteRule ^post/(.+)/?$ single.php?post=$1
 
 #RewriteRule ^page/(.+)/?$ page.php?page=$1
