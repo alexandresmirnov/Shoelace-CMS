@@ -2,15 +2,12 @@
 
 
 
-$settings = simplexml_load_file('data/settings.xml');
+include_once("init.php");
 
-$rootdir = $settings->installDir."/";
-
-
-$theme = $settings->theme;
-$themedir = 'themes/'.$theme;
-
-$themeDirectory = $rootdir.'/'.$themedir;
+/*
+echo $_SERVER['SERVER_NAME'];
+echo $_SERVER["DOCUMENT_ROOT"];
+*/
 
 require_once 'markdown.php';
 
