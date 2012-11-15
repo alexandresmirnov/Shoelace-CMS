@@ -13,15 +13,15 @@
 
 	
 
-	<link href="<?php echo $themedir; ?>/css/bootstrap.css" rel="stylesheet">
+	<link href="<?php echo $themeDirectory; ?>/css/bootstrap.css" rel="stylesheet">
 
 
-    <link href="<?php echo $themedir; ?>/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="<?php echo $themeDirectory; ?>/css/bootstrap-responsive.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="<?php echo $themedir; ?>/css/style.css">
+    <link rel="stylesheet" href="<?php echo $themeDirectory; ?>/css/style.css">
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="<?php echo $themedir; ?>/js/bootstrap.min.js"></script>
+    <script src="<?php echo $themeDirectory; ?>/js/bootstrap.min.js"></script>
 
 </head>
 

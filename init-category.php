@@ -3,10 +3,14 @@
 
 
 $settings = simplexml_load_file('data/settings.xml');
-$categories = simplexml_load_file('data/categories.xml');
+
+$rootdir = $settings->installDir."/";
+
 
 $theme = $settings->theme;
 $themedir = 'themes/'.$theme;
+
+$themeDirectory = $rootdir.'/'.$themedir;
 
 require_once 'markdown.php';
 
