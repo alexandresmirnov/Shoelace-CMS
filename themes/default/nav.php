@@ -6,7 +6,7 @@
         <div class="container">
 
 		<div class="row-fluid" id="search-row">
-		<form class="navbar-search pull-left collapse out span12" id="search" action="search.php" method="GET">
+		<form class="navbar-search pull-left collapse out span12" id="search" action="<?php echo $rootdir; ?>/search.php" method="GET">
   <input type="text" name="query" class="search-query span12" id="search-text" placeholder="Type and press enter.">
 </form>
 		</div>
@@ -19,12 +19,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="index.php"><?php echo $settings->siteName; ?></a>
+          <a class="brand" href="<?php echo $rootdir; ?>"><?php echo $settings->siteName; ?></a>
           <div class="nav-collapse collapse pull-right">
             <ul class="nav">
-              <li><a href="index.php">Home</a></li>
-              <li><a href="page.php?page=about">About</a></li>
-              <li><a href="page.php?page=contact">Contact</a></li>
+              <li><a href="<?php echo $rootdir; ?>">Home</a></li>
+              <li><a href="<?php echo $rootdir; ?>/page/about">About</a></li>
+              <li><a href="<?php echo $rootdir; ?>/page/contact">Contact</a></li>
 			  <li>
 			  
 			  

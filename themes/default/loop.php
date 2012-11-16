@@ -1,6 +1,6 @@
 <?php foreach($posts as $post){ ?>
 	<article>
-    <h2><a href="single.php?post=<?php echo $post->slug; ?>"><?php echo $post->title; ?></a></h2>
+    <h2><a href="<?php echo $rootdir; ?>/post/<?php echo $post->slug; ?>"><?php echo $post->title; ?></a></h2>
 
 	
 	
