@@ -1,9 +1,3 @@
-<?php 
-
-$settings = simplexml_load_file('../data/settings.xml');
-
-?>
-
 
 <div class="navbar" id="navigation">
   <div class="navbar-inner">

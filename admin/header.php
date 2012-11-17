@@ -7,9 +7,9 @@ header("Location: index.php?action=notallowed");
 
 $_SESSION["login"] = false;
 
-
-
 }
+
+$settings = simplexml_load_file('../data/settings.xml');
 
 
 ?>
@@ -20,7 +20,7 @@ $_SESSION["login"] = false;
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title>Shoelace CMS</title>
+	<title><?php echo $settings->siteName; ?></title>
 	<meta name="description" content="">
 	<meta name="author" content="">
 
