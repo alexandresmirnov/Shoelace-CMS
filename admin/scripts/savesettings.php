@@ -11,6 +11,7 @@ header('Location: index.php?action=error');
 $postsPerPage = $_POST['postsPerPage'];
 $siteName = $_POST['siteName'];
 $theme = $_POST['theme'];
+$installDir = $_POST['installDir'];
 $user = $_POST['user'];
 $pass = $_POST['pass'];
 
@@ -21,6 +22,7 @@ $settings->siteName = $siteName;
 $settings->theme = $theme;
 $settings->user = $user;
 $settings->pass = $pass;
+$settings->installDir = $installDir;
 
 
 
