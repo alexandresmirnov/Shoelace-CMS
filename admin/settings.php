@@ -55,7 +55,7 @@ foreach (glob("../themes/*", GLOB_ONLYDIR) as $themedir) {
 
 </select>
 
-<label for="user">Install Dir:</label>
+<label for="user">Install directory:</label>
 <input type="text" name="installDir" class="span6" value="<?php echo $settings->installDir; ?>">
 
 <label for="user">Admin Username:</label>
