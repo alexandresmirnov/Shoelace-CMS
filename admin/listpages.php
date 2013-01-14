@@ -25,7 +25,7 @@ foreach($pages as $page) {
 		<input type=\"checkbox\" name=\"toDelete[]\" value=\"".$page->attributes()->id."\">	
 		
 	</td>
-	<td><a href=\"editpage.php?page=".$page->attributes()->id."\">".$page->title."</a></td>
+	<td><a href=\"editpage.php?page=".$page->slug."\">".$page->title."</a></td>
 	</tr>
     ";
 }

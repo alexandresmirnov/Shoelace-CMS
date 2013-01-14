@@ -2,6 +2,6 @@
 
 include_once "init-page.php";
 
-include_once $themedir."/".$pageTemplate;
+include_once shoelaceinfo('themedir')."/".$pageTemplate;
 
 ?>

@@ -2,6 +2,6 @@
 
 include_once "init-posts.php";
 
-include_once $themedir."/index.php";
+include_once shoelaceinfo('themedir')."/index.php";
 
 ?>

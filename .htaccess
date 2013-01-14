@@ -8,6 +8,9 @@ RewriteRule ^post/(.+)/?$ single.php?post=$1
 
 RewriteRule ^search/(.+)/?$ search.php?query=$1
 
+RewriteRule ^posts/$ posts.php
+
+ErrorDocument 404 /my%20cms/404.php
 
 #RewriteRule ^post/(.+)/?$ single.php?post=$1
 

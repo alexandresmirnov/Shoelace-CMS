@@ -13,20 +13,20 @@ header('Location: index.php?action=error');
 $title = $_POST['title'];
 $content = $_POST['content'];
 $postid = $_POST['postid'];
+$postslug = $_POST['slug'];
 $excerpt = $_POST['excerpt'];
-$slug = $_POST['slug'];
 $categories = $_POST['categories'];
 $postTemplate = $_POST['postTemplate'];
 
 $posts = simplexml_load_file('../../data/posts.xml');
 
 
-$toEdit=$posts->xpath('post[@id="'.$postid.'"]');
+$toEdit=$posts->xpath("//post[contains(slug, '$postslug')]");
 
 $toEdit[0][0]->title = $title;
 $toEdit[0][0]->content = $content;
 $toEdit[0][0]->excerpt = $excerpt;
-$toEdit[0][0]->slug = $slug;
+$toEdit[0][0]->slug = $postslug;
 $toEdit[0][0]->postTemplate = $postTemplate = $_POST['postTemplate'];
 
 unset($toEdit[0][0]->categories);
@@ -49,6 +49,6 @@ $fh = fopen($myFile, 'w') or die("can't open file");
 fwrite($fh, $posts->asXML());
 fclose($fh);
 
-header('location: ../editpost.php?post='.$postid.'&action=saved');
+header('location: ../editpost.php?post='.$postslug.'&action=saved');
 
 ?>

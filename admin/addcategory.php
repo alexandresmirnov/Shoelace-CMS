@@ -14,7 +14,7 @@
 			<label for="slug">URL Slug:</label>
 			<input name="slug" id="slug" type="text" placeholder="URL Slug" class="span6">
 
-			<input type="Submit" class="btn btn-large">
+			<input type="Submit" class="btn btn-large" value="Create">
 		</form>
 
 

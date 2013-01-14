@@ -4,7 +4,7 @@
 <postsPerPage>3</postsPerPage>
 <siteName>Shoelace CMS</siteName>
 <theme>default</theme>
-<installDir>/</installDir>
+<installDir>/my cms</installDir>
 
 <user>admin</user>
 <pass>password</pass>

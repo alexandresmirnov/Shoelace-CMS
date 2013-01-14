@@ -9,8 +9,7 @@ $posts = simplexml_load_file('../data/posts.xml');
 
 $eachpost = $posts->post;
 
-$toEdit=$posts->xpath('post[@id="'.$thePost.'"]');
-
+$toEdit=$posts->xpath("//post[contains(slug, '$thePost')]");
 
 
 
@@ -51,11 +50,22 @@ if($action=='saved'){
 <input name="title" id="title" type="text" placeholder="Title" value="<?php echo $toEdit[0][0]->title; ?>" class="span6">
 
 <label for="contentTextarea">Post Content:</label>
-<textarea name="content" id="contentTextarea" class="span6" rows="20">
-<?php echo $toEdit[0][0]->content; ?>
-</textarea>
 
 
+     <div id="wmd-button-bar">
+	 
+     </div>
+	 
+	 <div id="editorWrapper">
+	 <div id="preview-switcher">Preview</div>
+<textarea id="wmd-input" name="content" class="span6" rows="20"><?php echo $toEdit[0][0]->content; ?></textarea>
+
+
+<div id="previewWrapper">
+<div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+</div>
+
+</div>
 
 <h4>More Options</h4>
 
@@ -63,6 +73,8 @@ if($action=='saved'){
 <textarea name="excerpt" id="excerpt" placeholder="Post Excerpt" class="span6" rows="10">
 <?php echo $toEdit[0][0]->excerpt; ?>
 </textarea>
+
+
 
 <label for="slug">URL Slug:</label>
 <input name="slug" id="slug" type="text" placeholder="URL Slug" class="span6" value="<?php echo $toEdit[0][0]->slug; ?>">
@@ -137,7 +149,7 @@ foreach (glob("../themes/".$currentTheme."/single*") as $filename) {
 
 <input name="postid" type="hidden" value="<?php echo $toEdit[0][0]->attributes()->id; ?>">
 
-<input type="Submit" class="btn btn-large">
+<input type="Submit" class="btn btn-large" value="Save">
 
 </form>
 

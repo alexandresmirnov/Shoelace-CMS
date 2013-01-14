@@ -8,7 +8,7 @@ $pages = simplexml_load_file('../data/pages.xml');
 
 $eachpage = $pages->page;
 
-$toEdit=$pages->xpath('page[@id="'.$thePage.'"]');
+$toEdit=$pages->xpath("//page[contains(slug, '$thePage')]");
 
 
 
@@ -47,11 +47,23 @@ if($action=='saved'){
 <label for="title">Title:</label>
 <input name="title" type="text" placeholder="Title" value="<?php echo $toEdit[0][0]->title; ?>" class="span6">
 
-<label for="content">Page Content:</label>
-<textarea name="content" class="span6" rows="20">
-<?php echo $toEdit[0][0]->content; ?>
-</textarea>
+<label for="contentTextarea">Post Content:</label>
 
+
+     <div id="wmd-button-bar">
+	 
+     </div>
+	 
+	 <div id="editorWrapper">
+	 <div id="preview-switcher">Preview</div>
+<textarea id="wmd-input" name="content" class="span6" rows="20"><?php echo $toEdit[0][0]->content; ?></textarea>
+
+
+<div id="previewWrapper">
+<div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+</div>
+
+</div>
 <input name="pageid" type="hidden" value="<?php echo $toEdit[0][0]->attributes()->id; ?>">
 
 <h4>More Options</h4>
@@ -85,7 +97,7 @@ foreach (glob("../themes/".$currentTheme."/page*") as $filename) {
 ?>
 </select>
 
-<input type="Submit" class="btn btn-large">
+<input type="Submit" class="btn btn-large" value="Save">
 
 
 

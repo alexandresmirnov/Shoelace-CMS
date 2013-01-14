@@ -7,7 +7,22 @@
 			<input name="title" id="title" type="text" placeholder="Title" class="span6">
 
 			<label for="contentTextarea">Post Content:</label>
-			<textarea name="content" id="contentTextarea" placeholder="Post Content" class="span6" rows="20"></textarea>
+
+
+     <div id="wmd-button-bar">
+	 
+     </div>
+	 
+	 <div id="editorWrapper">
+	 <div id="preview-switcher">Preview</div>
+<textarea id="wmd-input" name="content" class="span6" rows="20"></textarea>
+
+
+<div id="previewWrapper">
+<div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+</div>
+
+</div>
 
 			<h4>More Options</h4>
 
@@ -57,7 +72,7 @@ foreach (glob("../themes/".$currentTheme."/single*") as $filename) {
 ?>
 </select>
 
-			<input type="Submit" class="btn btn-large">
+			<input type="Submit" class="btn btn-large" value="Create">
 		</form>
 
 

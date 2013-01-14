@@ -49,6 +49,8 @@ if($action=='saved'){
 
 			<label for="descriptionTextarea">Description:</label>
 			<textarea name="description" id="descriptionTextarea" placeholder="Category Description" class="span6" rows="20"><?php echo $toEdit[0][0]->description; ?></textarea>
+			
+
 
 			<h4>More Options</h4>
 
@@ -57,7 +59,7 @@ if($action=='saved'){
 
 			<input name="catid" type="hidden" value="<?php echo $toEdit[0][0]->attributes()->id; ?>">
 			
-			<input type="Submit" class="btn btn-large">
+			<input type="Submit" class="btn btn-large" value="Save">
 		</form>
 
 
