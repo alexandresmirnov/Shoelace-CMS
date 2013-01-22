@@ -31,7 +31,7 @@ if($action=='saved'){
 
 
 <a class="close" data-dismiss="alert">&times;</a>
-<a href="../page.php?page=<?php echo $toEdit[0][0]->slug; ?>"><?php echo $toEdit[0][0]->title; ?></a> was saved successfully.
+<a href="../page.php?pageSlug=<?php echo $toEdit[0][0]->slug; ?>"><?php echo $toEdit[0][0]->title; ?></a> was saved successfully.
 
 </div>
 
@@ -56,7 +56,7 @@ if($action=='saved'){
 	 
 	 <div id="editorWrapper">
 	 <div id="preview-switcher">Preview</div>
-<textarea id="wmd-input" name="content" class="span6" rows="20"><?php echo $toEdit[0][0]->content; ?></textarea>
+<textarea id="wmd-input" name="content" class="span6" rows="20"><?php echo stripslashes($toEdit[0][0]->content); ?></textarea>
 
 
 <div id="previewWrapper">

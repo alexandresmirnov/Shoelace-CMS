@@ -14,17 +14,17 @@ $title = $_POST['title'];
 $content = $_POST['content'];
 $pageid = $_POST['pageid'];
 $slug = $_POST['slug'];
-$pageTemplate = $_POST['pageTemplate'];
+$pageTemplate = $_POST['template'];
 
 $pages = simplexml_load_file('../../data/pages.xml');
 
 
-$toEdit=$pages->xpath('page[@id="'.$pageid.'"]');
+$toEdit=$pages->xpath("//page[contains(slug, '$slug')]");
 
 $toEdit[0][0]->title = $title;
-$toEdit[0][0]->content = $content;
+$toEdit[0][0]->content = stripslashes($content);
 $toEdit[0][0]->slug = $slug;
-$toEdit[0][0]->pageTemplate = $pageTemplate = $_POST['pageTemplate'];
+$toEdit[0][0]->template = $pageTemplate = $_POST['template'];
 
 
 
@@ -35,6 +35,6 @@ $fh = fopen($myFile, 'w') or die("can't open file");
 fwrite($fh, $pages->asXML());
 fclose($fh);
 
-header('location: ../editpage.php?page='.$pageid.'&action=saved');
+header('location: ../edit.php?page='.$slug.'&action=saved');
 
 ?>

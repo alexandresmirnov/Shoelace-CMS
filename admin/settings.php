@@ -1,4 +1,3 @@
-
 <?php include "header.php"; ?>
 
 <form action="scripts/savesettings.php" method="POST">

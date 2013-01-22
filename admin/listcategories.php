@@ -1,7 +1,7 @@
 <?php include "header.php"; ?>
 
 
-<form action="scripts/deletecatscript.php" method="POST">
+<form action="scripts/deletecategoryscript.php" method="POST">
 <table id="catslist" class="table table-striped table-bordered">
 	
 	<?php
@@ -26,7 +26,7 @@ foreach($categories as $category) {
 		<input type=\"checkbox\" name=\"toDelete[]\" value=\"".$category->attributes()->id."\">	
 		
 	</td>
-	<td><a href=\"editcategory.php?category=".$category->attributes()->id."\">".$category->title."</a></td>
+	<td><a href=\"edit.php?category=".$category->attributes()->id."\">".$category->title."</a></td>
 
 	</tr>
     ";

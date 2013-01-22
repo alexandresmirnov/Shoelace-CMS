@@ -33,6 +33,8 @@ function shoelaceinfo($whatvar){
 	$previousPage = $page-1;
 	
 	
+	
+	
 	$urlparam = '';
 	
 
@@ -98,8 +100,28 @@ function shoelaceinfo($whatvar){
 
 		$post=$postSearch[0];
 
-		$postTemplate = $post->postTemplate;
+		$postTemplate = $post->template;
 	
+	}
+	
+	$pagesFile = simplexml_load_file('data/pages.xml');
+
+	if (isset($_GET['pageSlug'])) {
+		$thePage = $_GET['pageSlug'];
+		$pageSearch = $pagesFile->xpath("//page[contains(slug, '$thePage')]");
+
+		
+		if(count($pageSearch)==0){
+		
+			header( 'Location: '.$rootdir.'/404.php' );
+		
+		}
+		
+		
+		
+		$page = $pageSearch[0];
+		
+		$pageTemplate = $page->template;
 	}
 
 	/*
@@ -168,6 +190,15 @@ function shoelaceinfo($whatvar){
 		case 'post':
 			return $post;
 			break;
+		case 'pagesFile':
+			return $pagesFile;
+			break;
+		case 'pageTemplate':
+			return $pageTemplate;
+			break;
+		case 'page':
+			return $page;
+			break;
 		case 'query':
 			return $query;
 			break;
@@ -226,7 +257,7 @@ function listCategories($post, $before = "<li>", $after = "</li>"){
 			$newGET['category'] = $category;
 			$newURL = http_build_query($newGET);
 
-			echo $before."<a href=\"".shoelaceinfo('rootdir')."/category.php"."?".$newURL."\">".$category."</a>".$after;
+			echo $before."<a href=\"".shoelaceinfo('rootdir')."/category/".$category."\">".$category."</a>".$after;
 
 		}
 
@@ -237,6 +268,8 @@ function listCategories($post, $before = "<li>", $after = "</li>"){
 function previousPageLink($link = "&laquo;", $before = "<li>", $after="</li>"){
 
 	$newGET = array();
+	
+	$currentDir = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname($_SERVER['SCRIPT_FILENAME']));
 
 	if(shoelaceinfo('whereToStart')>0){
 	
@@ -244,7 +277,14 @@ function previousPageLink($link = "&laquo;", $before = "<li>", $after="</li>"){
 		
 		$newGET['page'] = shoelaceinfo('previousPage');
 		$newURL = http_build_query($newGET);
-		echo $before."<a href=\"".$_SERVER['PHP_SELF']."?".$newURL."\">".$link."</a>".$after;
+		
+		if(shoelaceinfo('previousPage')==1){
+			echo $before."<a href=\"".$currentDir."\">".$link."</a>".$after;
+		}
+		else{
+			echo $before."<a href=\"".$currentDir."/page/".shoelaceinfo('previousPage')."\">".$link."</a>".$after;
+		}
+		
 		
 	}
 
@@ -253,6 +293,8 @@ function previousPageLink($link = "&laquo;", $before = "<li>", $after="</li>"){
 function nextPageLink($link = "&raquo;", $before = "<li>", $after="</li>"){
 
 	$newGET = array();
+	
+	$currentDir = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname($_SERVER['SCRIPT_FILENAME']));
 
 	if(shoelaceinfo('upToWhere')<shoelaceinfo('howManyPosts')){
 	
@@ -261,7 +303,7 @@ function nextPageLink($link = "&raquo;", $before = "<li>", $after="</li>"){
 		$newGET['page'] = shoelaceinfo('nextPage');
 		$newURL = http_build_query($newGET);
 		
-		echo $before."<a href=\"".$_SERVER['PHP_SELF']."?".$newURL."\">".$link."</a>".$after;
+		echo $before."<a href=\"".$currentDir."/page/".shoelaceinfo('nextPage')."\">".$link."</a>".$after;
 		
 	}
 
@@ -282,18 +324,21 @@ function pageLinks($displayIfOnePage = true, $before = "<li>", $after = "</li>")
 		$newGET['page'] = $i;
 		$newURL = http_build_query($newGET);
 
+		$currentDir = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname($_SERVER['SCRIPT_FILENAME']));
+		
+		
 		if($displayIfOnePage==false && $howManyPages==1){
 		
 		}
 		else {
 		
-		if($i==1){
-			echo $before."<a href=\"".$_SERVER['PHP_SELF']."\">".$i."</a>".$after;
+			if($i==1){
+				echo $before."<a href=\"".$currentDir."\">".$i."</a>".$after;
 
-		}
-		else {
-			echo $before."<a href=\"".$_SERVER['PHP_SELF']."?".$newURL."\">".$i."</a>".$after;
-		}
+			}
+			else {
+				echo $before."<a href=\"".$currentDir."/page/".$i."\">".$i."</a>".$after;
+			}
 		
 		}
 	}

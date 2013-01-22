@@ -67,10 +67,21 @@
 		</li>
 		
 		
-		<li>
+		<li class="dropdown">
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings <b class="caret"></b></a>
+
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    	<li>
 			<a href="settings.php">
 				Settings
 			</a>
+		</li>
+		<li>
+			<a href="scripts/logout.php">
+				Log Out
+			</a>
+		</li>
+  </ul>
 		</li>
     </ul>
 

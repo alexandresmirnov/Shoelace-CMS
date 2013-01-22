@@ -26,7 +26,7 @@ foreach($posts as $post) {
 		<input type=\"checkbox\" name=\"toDelete[]\" value=\"".$post->attributes()->id."\">	
 		
 	</td>
-	<td><a href=\"editpost.php?post=".$post->slug."\">".$post->title."</a></td>
+	<td><a href=\"edit.php?post=".$post->slug."\">".$post->title."</a></td>
 	<td class=\"datecell\">".$post->date->month."/".$post->date->day."/".$post->date->year."</td>
 
 	</tr>

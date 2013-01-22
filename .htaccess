@@ -2,15 +2,21 @@ RewriteEngine on
 #RewriteRule ^posts/(\w+)/?$ /my\ cms/posts.php?
 RewriteRule ^posts/page/(\w+)/?$ posts.php?page=$1
 
-RewriteRule ^page/(.+)/?$ page.php?page=$1
+RewriteRule ^page/(.+)/?$ ?page=$1
+
+
 
 RewriteRule ^post/(.+)/?$ single.php?post=$1
+
+RewriteRule ^category/(.+)/?$ category.php?category=$1
 
 RewriteRule ^search/(.+)/?$ search.php?query=$1
 
 RewriteRule ^posts/$ posts.php
 
-ErrorDocument 404 /my%20cms/404.php
+RewriteRule ^([a-z0-9_\-]+)/?$ page.php?pageSlug=$1 [NC,L]
+
+#ErrorDocument 404 /my\ cms/404.php
 
 #RewriteRule ^post/(.+)/?$ single.php?post=$1
 

@@ -8,7 +8,6 @@ header('Location: index.php?action=error');
 
 }
 
-session_start();
 
 $user = $_POST['user'];
 $pass = $_POST['pass'];
@@ -17,7 +16,7 @@ $settings = simplexml_load_file('../../data/settings.xml');
 $correctUser = $settings->user;
 $correctPass = $settings->pass;
 
-echo $correctUser." and ".$correctPass;
+/* echo $correctUser." and ".$correctPass; */
 
 if($user==$correctUser && $pass==$correctPass){
 	$_SESSION["login"] = true; 

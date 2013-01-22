@@ -18,6 +18,8 @@ else {
 	$pages = array_reverse($pages["page"]);
 }
 
+
+
 foreach($pages as $page) {
     echo "
     <tr>
@@ -25,7 +27,7 @@ foreach($pages as $page) {
 		<input type=\"checkbox\" name=\"toDelete[]\" value=\"".$page->attributes()->id."\">	
 		
 	</td>
-	<td><a href=\"editpage.php?page=".$page->slug."\">".$page->title."</a></td>
+	<td><a href=\"edit.php?page=".$page->slug."\">".$page->title."</a></td>
 	</tr>
     ";
 }
@@ -38,7 +40,7 @@ foreach($pages as $page) {
 	
 	
 </table>
-<a href="addpost.php" class="btn">New Page</a>
+<a href="addpage.php" class="btn">New Page</a>
 <input type="submit" value="Delete Pages" class="btn btn-danger pull-right">
 </form>
 

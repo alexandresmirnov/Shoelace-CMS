@@ -16,7 +16,7 @@ $postid = $_POST['postid'];
 $postslug = $_POST['slug'];
 $excerpt = $_POST['excerpt'];
 $categories = $_POST['categories'];
-$postTemplate = $_POST['postTemplate'];
+$postTemplate = $_POST['template'];
 
 $posts = simplexml_load_file('../../data/posts.xml');
 
@@ -27,7 +27,7 @@ $toEdit[0][0]->title = $title;
 $toEdit[0][0]->content = $content;
 $toEdit[0][0]->excerpt = $excerpt;
 $toEdit[0][0]->slug = $postslug;
-$toEdit[0][0]->postTemplate = $postTemplate = $_POST['postTemplate'];
+$toEdit[0][0]->template = $postTemplate;
 
 unset($toEdit[0][0]->categories);
 
@@ -49,6 +49,6 @@ $fh = fopen($myFile, 'w') or die("can't open file");
 fwrite($fh, $posts->asXML());
 fclose($fh);
 
-header('location: ../editpost.php?post='.$postslug.'&action=saved');
+header('location: ../edit.php?post='.$postslug.'&action=saved');
 
 ?>

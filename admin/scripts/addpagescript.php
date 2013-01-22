@@ -13,7 +13,7 @@ header('Location: index.php?action=error');
 $title = $_POST['title'];
 $content = $_POST['content'];
 $slug = $_POST['slug'];
-$pageTemplate = $_POST['pageTemplate'];
+$pageTemplate = $_POST['template'];
 
 $pages = simplexml_load_file('../../data/pages.xml');
 
@@ -33,7 +33,7 @@ $date->addChild('day',date('j'));
 $date->addChild('month',date('n'));
 $date->addChild('year',date('Y'));
 $newpage->addChild('content', $content);
-$newpage->addChild('pageTemplate', $pageTemplate);
+$newpage->addChild('template', $pageTemplate);
 
 
 //echo $posts->asXML();

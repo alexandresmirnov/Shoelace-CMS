@@ -13,11 +13,10 @@ header('Location: index.php?action=error');
 $title = $_POST['title'];
 $description = $_POST['description'];
 $slug = $_POST['slug'];
-$catid = $_POST['catid'];
 
 $categories = simplexml_load_file('../../data/categories.xml');
 
-$toEdit=$categories->xpath('category[@id="'.$catid.'"]');
+$toEdit=$categories->xpath("//category[contains(slug, '$slug')]");
 
 
 
