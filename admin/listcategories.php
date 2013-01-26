@@ -40,7 +40,7 @@ foreach($categories as $category) {
 	
 	
 </table>
-<a href="addcategory.php" class="btn">New Category</a>
+<a href="add.php?type=page" class="btn">New Category</a>
 <input type="submit" value="Delete Categories" class="btn btn-danger pull-right">
 </form>
 

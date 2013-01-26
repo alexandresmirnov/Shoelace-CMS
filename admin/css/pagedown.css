@@ -38,6 +38,7 @@ body
 	position: absolute;
 	
 	visibility: hidden;
+	display: none;
 	
 	top: 0px;
 	

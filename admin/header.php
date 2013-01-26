@@ -84,7 +84,8 @@ var visibility = $('#previewWrapper').css('visibility');
 
 	if(visibility=='hidden'){
 		$('#previewWrapper').css({
-			visibility: 'visible'
+			visibility: 'visible',
+			display: 'block'
 		});
 		
 		$('#preview-switcher').text('Text');
@@ -94,7 +95,8 @@ var visibility = $('#previewWrapper').css('visibility');
 	
 	if(visibility=='visible'){
 		$('#previewWrapper').css({
-			visibility: 'hidden'
+			visibility: 'hidden',
+			display: 'none'
 		});
 		
 		$('#preview-switcher').text('Preview');

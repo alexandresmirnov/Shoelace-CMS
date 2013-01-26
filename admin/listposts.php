@@ -41,7 +41,7 @@ foreach($posts as $post) {
 	
 	
 </table>
-<a href="addpost.php" class="btn">New Post</a>
+<a href="add.php?type=post" class="btn">New Post</a>
 <input type="submit" value="Delete Posts" class="btn btn-danger pull-right">
 </form>
 

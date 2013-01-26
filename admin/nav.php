@@ -25,7 +25,7 @@
 			</a>
 		</li>
 		<li>
-			<a href="addpost.php">
+			<a href="add.php?type=post">
 				New Post
 			</a>
 		</li>
@@ -42,7 +42,7 @@
 			</a>
 		</li>
 		<li>
-			<a href="addpage.php">
+			<a href="add.php?type=page">
 				New Page
 			</a>
 		</li>
@@ -59,7 +59,7 @@
 			</a>
 		</li>
 		<li>
-			<a href="addcategory.php">
+			<a href="add.php?type=category">
 				New Category
 			</a>
 		</li>

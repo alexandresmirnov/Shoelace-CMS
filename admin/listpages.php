@@ -40,7 +40,7 @@ foreach($pages as $page) {
 	
 	
 </table>
-<a href="addpage.php" class="btn">New Page</a>
+<a href="add.php?type=page" class="btn">New Page</a>
 <input type="submit" value="Delete Pages" class="btn btn-danger pull-right">
 </form>
 
