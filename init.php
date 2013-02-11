@@ -1,6 +1,6 @@
 <?php 
 
-
+/*
 function shoelaceinfo($whatvar){
 
 	$settings = simplexml_load_file('data/settings.xml');
@@ -32,7 +32,7 @@ function shoelaceinfo($whatvar){
 	$nextPage = $page+1;
 	$previousPage = $page-1;
 	
-	
+	$currentType = 'home';
 	
 	
 	$urlparam = '';
@@ -60,6 +60,9 @@ function shoelaceinfo($whatvar){
 	
 	//If a search query is entered
 	if (isset($_GET['query'])) {
+	
+		$currentType = 'search';
+		
 		$query = $_GET['query'];
 		
 		$query = strtolower($query);
@@ -77,6 +80,9 @@ function shoelaceinfo($whatvar){
 	
 	//If a category is active
 	if (isset($_GET['category'])) {
+	
+		$currentType = 'category';
+		
 		$cat = $_GET['category'];
 		
 		$postsSearch = $postsFile->xpath("//post[contains(categories, '".$cat."')]");
@@ -94,6 +100,8 @@ function shoelaceinfo($whatvar){
 	//Single post view
 	if (isset($_GET['post'])) {
 	
+		$currentType = 'single';
+	
 		$thePost = $_GET['post'];
 		
 		$postSearch = $postsFile->xpath("//post[contains(slug, '$thePost')]");
@@ -107,6 +115,9 @@ function shoelaceinfo($whatvar){
 	$pagesFile = simplexml_load_file('data/pages.xml');
 
 	if (isset($_GET['pageSlug'])) {
+		
+		$currentType = 'page';
+	
 		$thePage = $_GET['pageSlug'];
 		$pageSearch = $pagesFile->xpath("//page[contains(slug, '$thePage')]");
 
@@ -124,25 +135,7 @@ function shoelaceinfo($whatvar){
 		$pageTemplate = $page->template;
 	}
 
-	/*
-	$postSlugs = array(
-		//post ID => post
-	);
-
-
-
-	foreach(shoelaceinfo('posts') as $post){
-
-
-	$postSlug = $post->slug;
-
-	$postSlugs["".$postSlug] = $post;
-
-	}
-
-	$post=$postSlugs[$thePost];
-	*/
-
+	
 	
 	
 	
@@ -208,10 +201,10 @@ function shoelaceinfo($whatvar){
 		case 'theme':
 			return $theme;
 			break;
-		case 'themedir':
+		case 'themeDir':
 			return $themedir;
 			break;
-		case 'rootdir':
+		case 'rootDir':
 			return $rootdir;
 			break;
 		case 'themeDirectory':
@@ -220,23 +213,144 @@ function shoelaceinfo($whatvar){
 		case 'siteName':
 			return $siteName;
 			break;
+		case 'currentType':
+			return $currentType;
+			break;
 	}
 	
 	
 
 }
 
-/*
-echo shoelaceinfo('page');
-echo shoelaceinfo('whereToStart');
-echo shoelaceinfo('upToWhere');
-echo " ";
-echo shoelaceinfo('howManyPosts');
-echo shoelaceinfo('postsPerPage');
 */
 
+require_once 'markdown.php';
 
-function listCategories($post, $before = "<li>", $after = "</li>"){
+
+class Shoelace {
+
+	public function __construct(){
+	
+		$settings = simplexml_load_file('data/settings.xml');
+
+	
+		foreach($settings->children() as $child){
+		
+			$childName = $child->getName();
+			
+			$this->$childName = $child;
+			
+		}
+		
+		$this->themeDir = 'themes/'.$this->theme;
+	
+		$this->themeDirectory = $this->installDir."/".$this->themeDir;
+	
+		$this->rootDir = $this->installDir;
+	
+		$this->pagesFile = simplexml_load_file('data/pages.xml');
+	
+		$this->postsFile = simplexml_load_file('data/posts.xml');
+		$this->posts = (array) $this->postsFile;
+		$this->posts = array_reverse($this->posts["post"]);
+	
+		if (isset($_GET['page'])) {
+			$this->page = $_GET['page'];
+		}
+		else {
+			$this->page = 1;
+		}
+		
+		$this->nextPage = $this->page+1;
+		$this->previousPage = $this->page-1;
+	
+		$this->currentType = 'home';
+		$this->urlparam = '';
+		
+		$this->whereToStart = $this->postsPerPage*($this->page-1);
+		$this->upToWhere = $this->postsPerPage*$this->page;
+		
+		$this->query = '';
+		
+		$this->howManyPosts = count($this->posts);
+		
+		$this->howManyPages = $this->howManyPosts/$this->postsPerPage;
+		$this->howManyPages = ceil($this->howManyPages);
+
+		$this->posts = array_slice($this->posts, $this->whereToStart, $this->postsPerPage);
+		
+		if (isset($_GET['query'])) {
+	
+			$this->currentType = 'search';
+			
+			$this->query = $_GET['query'];
+			
+			$this->query = strtolower($this->query);
+			
+			$this->postsSearch = $this->postsFile->xpath("//post[contains(translate(content, 'ABCDEFGHJIKLMNOPQRSTUVWXYZ', 'abcdefghjiklmnopqrstuvwxyz'), '".$this->query."')] |// //post[contains(translate(title, 'ABCDEFGHJIKLMNOPQRSTUVWXYZ', 'abcdefghjiklmnopqrstuvwxyz'), '".$this->query."')]");
+			$this->searchResults = array_reverse($this->postsSearch);
+			
+			$this->howManyPosts = count($this->searchResults);
+			
+			$this->posts = array_slice($this->searchResults, $this->whereToStart , $this->postsPerPage);
+			
+		}
+		
+		if (isset($_GET['category'])) {
+	
+			$this->currentType = 'category';
+			
+			$this->cat = $_GET['category'];
+			
+			$this->postsSearch = $this->postsFile->xpath("//post[contains(categories, '".$this->cat."')]");
+			$this->posts = array_reverse($this->postsSearch);
+			
+			//the total amount of posts
+			$this->howManyPosts = count($this->posts);
+			
+			$this->posts = array_slice($this->posts, $this->whereToStart , $this->postsPerPage);
+			
+		}
+		
+		if (isset($_GET['post'])) {
+	
+			$this->currentType = 'single';
+		
+			$this->thePost = $_GET['post'];
+			
+			$this->postSearch = $this->postsFile->xpath("//post[contains(slug, '$this->thePost')]");
+
+			$this->post=$this->postSearch[0];
+
+			$this->postTemplate = $this->post->template;
+		
+		}
+		
+		if (isset($_GET['pageSlug'])) {
+		
+			$this->currentType = 'page';
+		
+			$this->thePage = $_GET['pageSlug'];
+			$this->pageSearch = $this->pagesFile->xpath("//page[contains(slug, '$this->thePage')]");
+
+			
+			if(count($this->pageSearch)==0){
+			
+				header( 'Location: '.$this->rootDir.'/404.php' );
+			
+			}
+			
+			
+			
+			$this->page = $this->pageSearch[0];
+			
+			$this->pageTemplate = $this->page->template;
+		}
+		
+	}
+		
+		
+		public function listCategories($post, $before = "<li>", $after = "</li>"){
 	
 	
 	/*
@@ -257,7 +371,7 @@ function listCategories($post, $before = "<li>", $after = "</li>"){
 			$newGET['category'] = $category;
 			$newURL = http_build_query($newGET);
 
-			echo $before."<a href=\"".shoelaceinfo('rootdir')."/category/".$category."\">".$category."</a>".$after;
+			echo $before."<a href=\"".$this->rootDir."/category/".$category."\">".$category."</a>".$after;
 
 		}
 
@@ -265,57 +379,57 @@ function listCategories($post, $before = "<li>", $after = "</li>"){
 
 }
 
-function previousPageLink($link = "&laquo;", $before = "<li>", $after="</li>"){
+public function previousPageLink($link = "&laquo;", $before = "<li>", $after="</li>"){
 
 	$newGET = array();
 	
 	$currentDir = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname($_SERVER['SCRIPT_FILENAME']));
-
-	if(shoelaceinfo('whereToStart')>0){
+	
+	if($this->whereToStart>0){
 	
 		$newGET = $_GET;
 		
-		$newGET['page'] = shoelaceinfo('previousPage');
+		$newGET['page'] = $this->previousPage;
 		$newURL = http_build_query($newGET);
 		
-		if(shoelaceinfo('previousPage')==1){
+		if($this->previousPage==1){
 			echo $before."<a href=\"".$currentDir."\">".$link."</a>".$after;
 		}
 		else{
-			echo $before."<a href=\"".$currentDir."/page/".shoelaceinfo('previousPage')."\">".$link."</a>".$after;
+			echo $before."<a href=\"".$currentDir."/page/".$this->previousPage."\">".$link."</a>".$after;
 		}
 		
 		
 	}
 
-};
+}
 
-function nextPageLink($link = "&raquo;", $before = "<li>", $after="</li>"){
+public function nextPageLink($link = "&raquo;", $before = "<li>", $after="</li>"){
 
 	$newGET = array();
 	
 	$currentDir = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname($_SERVER['SCRIPT_FILENAME']));
 
-	if(shoelaceinfo('upToWhere')<shoelaceinfo('howManyPosts')){
+	if($this->upToWhere<$this->howManyPosts){
 	
 		$newGET = $_GET;
 		
-		$newGET['page'] = shoelaceinfo('nextPage');
+		$newGET['page'] = $this->nextPage;
 		$newURL = http_build_query($newGET);
 		
-		echo $before."<a href=\"".$currentDir."/page/".shoelaceinfo('nextPage')."\">".$link."</a>".$after;
+		echo $before."<a href=\"".$currentDir."/page/".$this->nextPage."\">".$link."</a>".$after;
 		
 	}
 
-};
+}
 
-function pageLinks($displayIfOnePage = true, $before = "<li>", $after = "</li>"){
+public function pageLinks($displayIfOnePage = true, $before = "<li>", $after = "</li>"){
 
 	
 	
 	$newGET = array();
 
-	$howManyPages = shoelaceinfo('howManyPosts')/shoelaceinfo('postsPerPage');
+	$howManyPages = $this->howManyPosts/$this->postsPerPage;
 	$howManyPages = ceil($howManyPages);
 
 	for($i=1; $i <= $howManyPages; $i++){
@@ -344,6 +458,34 @@ function pageLinks($displayIfOnePage = true, $before = "<li>", $after = "</li>")
 	}
 
 }
+		
+		
+		
+	
+	
+	
+	//public $themeDirectory = $this->installDir;
+
+	
+	
+}
+
+$shoelace = new Shoelace;
+
+
+
+
+/*
+echo shoelace('page');
+echo shoelace('whereToStart');
+echo shoelace('upToWhere');
+echo " ";
+echo shoelace('howManyPosts');
+echo shoelace('postsPerPage');
+*/
+
+
+
 
 
 

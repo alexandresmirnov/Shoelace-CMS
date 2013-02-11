@@ -1,8 +1,8 @@
-<?php foreach(shoelaceinfo('posts') as $post){ ?>
+<?php foreach($shoelace->posts as $post){ ?>
 	<article>
-    <h2><a href="<?php echo shoelaceinfo('rootdir'); ?>/post/<?php echo $post->slug; ?>"><?php echo $post->title; ?></a></h2>
+    <h2><a href="<?php echo $shoelace->rootDir; ?>/post/<?php echo $post->slug; ?>"><?php echo $post->title; ?></a></h2>
 
-	<?php listCategories($post); ?>
+	<?php $shoelace->listCategories($post); ?>
 	
     <p>
     <?php echo $post->excerpt; ?>
@@ -13,10 +13,10 @@
 
 <div class="pagination">
 <ul>
-<?php previousPageLink(); ?>
+<?php $shoelace->previousPageLink(); ?>
 
-<?php pageLinks(false); ?>
+<?php $shoelace->pageLinks(false); ?>
 
-<?php nextPageLink(); ?>
+<?php $shoelace->nextPageLink(); ?>
 </ul>
 </div>

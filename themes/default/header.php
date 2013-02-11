@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title><?php echo shoelaceinfo('siteName') ?></title>
+	<title><?php echo $shoelace->siteName ?></title>
 	<meta name="description" content="">
 	<meta name="author" content="">
 
@@ -12,15 +12,15 @@
 
 	
 
-	<link href="<?php echo shoelaceinfo('themeDirectory'); ?>/css/bootstrap.css" rel="stylesheet">
+	<link href="<?php echo $shoelace->themeDirectory; ?>/css/bootstrap.css" rel="stylesheet">
 
 
-    <link href="<?php echo shoelaceinfo('themeDirectory'); ?>/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="<?php echo $shoelace->themeDirectory; ?>/css/bootstrap-responsive.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="<?php echo shoelaceinfo('themeDirectory'); ?>/css/style.css">
+    <link rel="stylesheet" href="<?php echo $shoelace->themeDirectory; ?>/css/style.css">
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="<?php echo shoelaceinfo('themeDirectory'); ?>/js/bootstrap.min.js"></script>
+    <script src="<?php echo $shoelace->themeDirectory; ?>/js/bootstrap.min.js"></script>
 
 </head>
 

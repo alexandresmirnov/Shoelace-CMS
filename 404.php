@@ -2,6 +2,6 @@
 
 include_once "init.php";
 
-include_once shoelaceinfo('themedir')."/404.php";
+include_once $shoelace->themeDir."/404.php";
 
 ?>

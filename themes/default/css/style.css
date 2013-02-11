@@ -9,3 +9,4 @@
 @media (max-width:979px){}
 article h2 a{color:inherit;}article h2 a:hover{text-decoration:none;}
 article h2 a:active{color:#004466;}
+table td,tr{padding:5px;}

@@ -1,14 +1,14 @@
 <?php include_once "header.php"; 
 
-$post = shoelaceinfo('post');
+$post = $shoelace->post;
 
 ?>
 
 
 	<article>
-    <h2><a href="single.php?post=<?php echo $post->slug; ?>"><?php echo $post->title; ?></a></h2>
+    <h2><a href="<?php echo $shoelace->rootDir; ?>/post/<?php echo $post->slug; ?>"><?php echo $post->title; ?></a></h2>
 
-	<?php listCategories($post); ?>
+	<?php $shoelace->listCategories($post); ?>
 	
     <p>
     <?php echo Markdown($post->content); ?>
