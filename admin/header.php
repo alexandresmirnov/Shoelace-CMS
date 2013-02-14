@@ -12,6 +12,8 @@ $_SESSION["login"] = false;
 $settings = simplexml_load_file('../data/settings.xml');
 
 
+include_once "objects.php";
+
 ?>
 
 <!doctype html>
@@ -74,6 +76,26 @@ $("textarea").keydown(function(e) {
 
 
 $('#preview-switcher').click(function(){
+
+var text = $('#wmd-input').val();
+
+console.log(text);
+
+var dataString = 'text='+ text;
+$.ajax({
+	type: "POST",
+	url: "returnMarkdownExtra.php",
+	data: dataString,
+	success: function(data) {
+		$('#wmd-preview').html(data);
+	}
+});
+  
+
+
+
+
+
 
 var previewHeight = $('#previewWrapper').height();
 $('#wmd-preview').css({

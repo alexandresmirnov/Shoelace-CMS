@@ -468,6 +468,8 @@ public function pageLinks($displayIfOnePage = true, $before = "<li>", $after = "
 
 	
 	
+	public $typeList;
+	
 }
 
 $shoelace = new Shoelace;

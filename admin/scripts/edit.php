@@ -8,11 +8,18 @@ header('Location: index.php?action=error');
 
 }
 
+$settings = simplexml_load_file('../../data/settings.xml');
+
 
 include_once('../objects.php');
 
+if(isset($_POST['authKey']) && isset($_POST['type'])){
 
-if(isset($_POST['type'])){
+$authKey = $_POST['authKey'];
+
+if($authKey==$settings->authKey){
+
+
 	$type = $_POST['type'];
 
 	if($type=='post'){
@@ -25,21 +32,15 @@ if(isset($_POST['type'])){
 		$newEntry = new TypeCategory;
 	}
 	
-	$newEntry->writeFields($newEntry->toSave, $newEntry->entryName, $newEntry->XMLfile);
-		
+	$newEntry->editFields($newEntry->toSave, $newEntry->entryName, $newEntry->XMLfile);
+	
+	//echo $newEntry->slug;
+	
+	//header('Location: ');
+	
 }
 
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 ?>

@@ -7,39 +7,25 @@ include_once('objects.php');
 
 
 <?php 
-$settings = simplexml_load_file('../data/settings.xml');
+
 
 $rootdir = $settings->installDir;
 
-if(isset($_GET['post'])){
+foreach($typeKeyValue as $key => $value){
 
-	$edit = new TypePost;
-	
-	$toEdit = $edit->returnToEdit();
-	
-	$editLink = '../single.php?post='.$toEdit->slug;
-	
+	if(isset($_GET[$key])){
+		
+		$edit = new $value;
+		
+		$toEdit = $edit->returnToEdit();
+		$editLink = '../single.php?post='.$toEdit->slug;
+		
+		break;
+		
+	}
+
 }
 
-if(isset($_GET['page'])){
-
-	$edit = new TypePage;
-	
-	$toEdit = $edit->returnToEdit();
-	
-	$editLink = $rootdir.'/'.$toEdit->slug;
-	
-}
-
-if(isset($_GET['category'])){
-
-	$edit = new TypeCategory;
-	
-	$toEdit = $edit->returnToEdit();
-	
-	$editLink = '../category.php?category='.$toEdit->slug;
-	
-}
 
 
 

@@ -57,6 +57,11 @@ foreach (glob("../themes/*", GLOB_ONLYDIR) as $themedir) {
 <label for="user">Install directory:</label>
 <input type="text" name="installDir" class="span6" value="<?php echo $settings->installDir; ?>">
 
+
+<label for="authKey">Authentication Key:</label>
+<input type="text" name="authKey" class="span6" value="<?php echo $settings->authKey; ?>">
+
+
 <label for="user">Admin Username:</label>
 <input type="text" name="user" class="span6" value="<?php echo $settings->user; ?>">
 

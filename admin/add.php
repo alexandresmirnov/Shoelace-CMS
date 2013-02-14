@@ -13,22 +13,16 @@ include_once('objects.php');
 
 $type = $_GET['type'];
 
-if($type=='post'){
+foreach($typeKeyValue as $key => $value){
 
-	$add = new TypePost;
-	
-}
+	if($type==$key){
+		
+		$add = new $value;
 
-if($type=='page'){
+		break;
+		
+	}
 
-	$add = new TypePage;
-	
-}
-
-if($type=='category'){
-
-	$add = new TypeCategory;
-	
 }
 
 

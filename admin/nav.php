@@ -20,7 +20,7 @@
 
   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
     	<li>
-			<a href="listposts.php">
+			<a href="list.php?type=post">
 				View Posts
 			</a>
 		</li>
@@ -37,7 +37,7 @@
 
   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
     	<li>
-			<a href="listpages.php">
+			<a href="list.php?type=page">
 				Pages
 			</a>
 		</li>
@@ -54,7 +54,7 @@
 
   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
     	<li>
-			<a href="listcategories.php">
+			<a href="list.php?type=category">
 				Categories
 			</a>
 		</li>

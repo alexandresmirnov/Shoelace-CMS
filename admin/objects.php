@@ -7,8 +7,8 @@ class Type {
 	public $xpathQuery;
 	public $urlparam;
 	
-	public $addFormAction = 'scripts/addscript.php';
-	public $editFormAction = 'scripts/editscript.php';
+	public $addFormAction = 'scripts/add.php';
+	public $editFormAction = 'scripts/edit.php';
 	
 	public $necessaryFields;
 	
@@ -95,6 +95,8 @@ class Type {
 		echo "<input type=\"hidden\" name=\"type\"value=\"".$this->XMLname."\">";
 		
 		echo "<input type=\"hidden\" name=\"id\"value=\"".$id."\">";
+		
+		echo "<input type=\"hidden\" name=\"authKey\" value=\"".$settings->authKey."\">";
 	
 		foreach($necessaryFields as $field){
 			$name = $field[0];
@@ -182,12 +184,79 @@ class Type {
 		}
 
 		
-		echo "<input type=\"Submit\" class=\"btn btn-large\" value=\"".$this->buttonText."\">";
+		echo "<input type=\"Submit\" class=\"btn btn-large\" value=\"".$this->saveButtonText."\">";
 		
 		echo "</form>";
 		
 		
 
+	}
+	
+	public function generateList($listCells){
+		
+		$settings = simplexml_load_file("../data/settings.xml");
+		
+		
+		echo "<form action=\"scripts/deletescript.php\" method=\"POST\">";
+		echo "<input type=\"hidden\" name=\"type\" value=\"".$this->urlparam."\">";
+		echo "<table class=\"table table-striped table-bordered\">";
+		echo "<input type=\"hidden\" name=\"authKey\" value=\"".$settings->authKey."\">";
+		
+		
+		$file = simplexml_load_file($this->whatFileBase);
+		$fileCount = count($file);
+		
+		if($fileCount=='1'){
+			$tableRows = $file->$this->XMLname;
+		}
+		else {
+			$tableRows = (array) $file;
+			$tableRows = array_reverse($tableRows[$this->XMLname]);
+		}
+		
+		foreach($tableRows as $row){
+			
+			echo "<tr>";
+			
+			foreach($listCells as $cell){
+				
+				switch ($cell){
+					
+					case 'checkBox':
+						echo "
+						<td class=\"checkboxcell\">
+							<input type=\"checkbox\" name=\"toDelete[]\" value=\"".$row->attributes()->id."\">	
+		
+						</td>";
+					
+						break;
+						
+					case 'title':
+						echo "<td><a href=\"edit.php?".$this->urlparam."=".$row->slug."\">".$row->title."</a></td>";
+						
+						break;
+					case 'date':
+						echo "<td class=\"datecell\">".$row->date->month."/".$row->date->day."/".$row->date->year."</td>";
+						break;
+					
+				}
+				
+			}
+			
+			echo "</tr>";
+			
+		}
+		
+		echo "</table>";
+		
+		echo "
+		<a href=\"add.php?type=".$this->urlparam."\" class=\"btn\">".$this->addButtonText."</a>
+		<input type=\"submit\" value=\"".$this->deleteButtonText."\" class=\"btn btn-danger pull-right\">
+		";
+		
+		echo "</form>";
+		
+	
 	}
 	
 	
@@ -293,6 +362,82 @@ class Type {
 	
 }
 
+class Settings {
+
+	public $necessaryFields = array(
+		array('siteName', 'text', 'Site Name:', 'Site Name'),
+		array('postsPerPage', 'text', 'Posts Per Page:', 'Posts Per Page'),
+		array('theme', 'themeDropdown', 'Theme:', 'Theme'),
+		array('installDir', 'text', 'Install Directory:', 'Install Directory'),
+		array('authKey', 'text', 'Authentication Key:', 'Authentication Key'),
+		array('user', 'text', 'Admin Username:', 'Admin Username'),
+		array('pass', 'text', 'Admin Password:', 'Admin Password')
+	);
+	
+	public $saveButtonText = "Save Settings";
+	
+	public function generatePage($necessaryFields){
+	
+		$settings = simplexml_load_file('../data/settings.xml');
+		
+		echo "<form action=\"scripts/savesettings.php\" method=\"POST\">";
+	
+		foreach($necessaryFields as $field){
+			$name = $field[0];
+			$type = $field[1];
+			$label = $field[2];
+			$placeholder = $field[3];
+			
+			switch ($type) {
+				case 'text':
+					echo "<label for=\"".$name."\">".$label."</label><input name=\"".$name."\" type=\"text\" placeholder=\"".$placeholder."\" value=\"".$settings->$name."\" class=\"span6\">";
+					break;
+				case 'mdtextarea':
+					echo "<label for=\"".$name."\">".$label."</label><div id=\"wmd-button-bar\"></div><div id=\"editorWrapper\"><div id=\"preview-switcher\">Preview</div><textarea id=\"wmd-input\" name=\"content\" class=\"span6\" rows=\"20\" placeholder=\"".$placeholder."\">".stripslashes($settings->$name)."</textarea><div id=\"previewWrapper\"><div id=\"wmd-preview\" class=\"wmd-panel wmd-preview\"></div></div></div>";
+					break;
+				case 'textarea':
+					echo "<label for=\"excerpt\">".$label."</label><textarea name=\"".$name."\" id=\"".$name."\" placeholder=\"".$placeholder."\" class=\"span6\" rows=\"10\">".$settings->$name."</textarea>";
+					break;
+				case 'heading':
+					echo "<h4>".$label."</h4>";
+					break;
+				case 'themeDropdown':
+					$currentTheme = $settings->theme;
+					
+					echo "<label for=\"".$name."\">".$label."</label>";
+					
+					echo "<select id=\"".$name."\" name=\"".$name."\" class=\"span6\">";
+					
+					foreach (glob("../themes/*", GLOB_ONLYDIR) as $themedir) {
+					
+						$themename = str_replace("../themes/", "", $themedir);
+						
+						if($themename==$currentTheme){
+						echo "<option value=\"".$themename."\" selected=\"selected\">".$themename."</option>";
+						}
+						else {
+						echo "<option value=\"".$themename."\">".$themename."</option>";
+						}
+						
+					}
+					
+					echo "</select>";
+
+					break;
+			}
+		}
+
+		
+		echo "<input type=\"Submit\" class=\"btn btn-large\" value=\"".$this->saveButtonText."\">";
+		
+		echo "</form>";
+		
+		
+
+	}
+
+}
+
 
 class TypePage extends Type {
 	
@@ -303,7 +448,9 @@ class TypePage extends Type {
 	
 	public $whatFileBase = '../data/pages.xml';
 	
-	public $buttonText = 'Save Page';
+	public $saveButtonText = 'Save Page';
+	public $addButtonText = 'New Page';
+	public $deleteButtonText = 'Delete Pages';
 
 	
 	public $necessaryFields = array(
@@ -313,6 +460,8 @@ class TypePage extends Type {
 		array('slug', 'text', 'URL Slug: ', 'URL Slug'),
 		array('template', 'templateDropdown', 'Page Template: ', 'Page Template')
 	);
+	
+	public $listCells = array('checkBox', 'title');
 	
 	//addscript.php variables
 	public $XMLfile = '../../data/pages.xml';
@@ -330,18 +479,22 @@ class TypePost extends Type {
 	
 	public $whatFileBase = '../data/posts.xml';
 	
-	public $buttonText = 'Save Post';
+	public $saveButtonText = 'Save Post';
+	public $addButtonText = 'New Post';
+	public $deleteButtonText = 'Delete Posts';
 
 	
 	public $necessaryFields = array(
 		array('title', 'text', 'Title:', 'Title'),
-		array('content', 'mdtextarea', 'Post Content:', 'Page Content'),
+		array('content', 'mdtextarea', 'Post Content:', 'Post Content'),
 		array('moreoptions', 'heading', 'More Options', 'More Options'),
 		array('excerpt', 'textarea', 'Post Excerpt:', 'Post Excerpt'),
 		array('slug', 'text', 'URL Slug: ', 'URL Slug'),
 		array('categories[]', 'categoriesSelect', 'Post Categories: ', 'Post Categories'),
 		array('template', 'templateDropdown', 'Post Template: ', 'Post Template')
 	);
+	
+	public $listCells = array('checkBox', 'title', 'date');
 	
 	//addscript.php variables
 	public $XMLfile = '../../data/posts.xml';
@@ -361,8 +514,9 @@ class TypeCategory extends Type {
 	
 	
 	
-	public $buttonText = 'Save Category';
-
+	public $saveButtonText = 'Save Category';
+	public $addButtonText = 'New Category';
+	public $deleteButtonText = 'Delete Categories';
 	
 	public $necessaryFields = array(
 		array('title', 'text', 'Title:', 'Title'),
@@ -371,6 +525,8 @@ class TypeCategory extends Type {
 		array('slug', 'text', 'URL Slug: ', 'URL Slug'),
 	);
 	
+	public $listCells = array('checkBox', 'title');
+	
 	//addscript.php variables
 	public $XMLfile = '../../data/categories.xml';
 	public $entryName = 'category';
@@ -378,6 +534,26 @@ class TypeCategory extends Type {
 	public $toSave = array('title','description','slug');
 	
 }
+
+
+
+
+
+$typeList = array('TypePost','TypePage','TypeCategory');
+
+$typeKeyValue = array(
+	
+);
+
+foreach($typeList as $type){
+
+	$instance = new $type;
+	
+	$typeKeyValue[$instance->urlparam] = $type;
+	
+}
+
+$howManyTypes = count($typeKeyValue);
 
 
 
